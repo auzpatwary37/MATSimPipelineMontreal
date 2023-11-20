@@ -1,0 +1,6 @@
+-e git+https://github.com/eqasim-org/eqasim-python.git@941570aa37cd012256cf3ecab01983fc397ba2f2#egg=eqasim
+geopandas==0.7.0
+PyYAML==5.3.1
+Rtree==0.9.4
+scipy==1.4.1
+tqdm==4.49

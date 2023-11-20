@@ -1,0 +1,95 @@
+project:
+  inputs:
+    column_names:
+      geo: geo
+      hid: hid
+      pid: pid
+      region: region
+      sample_geo: sample_geo
+    entities:
+    - household
+    - person
+    housing_entities:
+    - household
+    location:
+      geo_corr_mapping:
+        geo_to_sample: geo_sample_mapping.csv
+        region_to_geo: region_geo_mapping.csv
+        region_to_sample: region_sample_mapping.csv
+      marginals:
+        geo:
+          household: household_marginals.csv
+          person: person_marginals.csv
+        region:
+          household: region_household_marginals.csv
+          person: region_person_marginals.csv
+      sample:
+        household: household_sample.csv
+        person: person_sample.csv
+    person_entities:
+    - person
+  location: /scratch/omanout/popgen_montreal_output_OD2016/data/
+  name: example
+  scenario:
+  - control_variables:
+      geo:
+        household:
+        - hh_size
+        - hh_income
+        - hh_car
+        person:
+        - age
+        - license_sex
+      region:
+        household:
+        - hh_size
+        person:
+        - sex
+    description: Server test
+    geos_to_synthesize:
+      region:
+        ids: [1]
+    outputs:
+      multiway:
+      - entity: null
+        filename: null
+        filetype: null
+        variables: []
+      performance:
+      - ipf
+      - reweighting
+      - drawing
+      summary:
+        geo:
+          filename: summary_geo.csv
+          filetype: csv
+        region:
+          filename: summary_region.csv
+          filetype: csv
+      synthetic_population:
+        housing:
+          filename: housing_synthetic.csv
+          filetype: csv
+        person:
+          filename: person_synthetic.csv
+          filetype: csv
+      weights:
+        collate_across_geos: false
+        export: true
+    parameters:
+      draws:
+        iterations: 25
+        pvalue_tolerance: 0.9999
+        seed: 0
+      ipf:
+        archive_performance_frequency: 1
+        iterations: 250
+        rounding_procedure: bucket
+        tolerance: 0.0001
+        zero_marginal_correction: 1.0e-05
+      reweighting:
+        archive_performance_frequency: 1
+        inner_iterations: 100
+        outer_iterations: 100
+        procedure: ipu
+        tolerance: 0.001

@@ -1,0 +1,35 @@
+To prepare MATSIM input data, we need Popgen output data (person_synthetics.csv and housing_synthetics.csv). There is a complete pipeline that generates Popgen data on Cedar.
+
+#Steps
+
+1. Prepare a Python virtual environment by running `bash matsim_setup.sh`
+2. Install the packages listed in requirements.txt `pip install -r requirements.txt` 
+3. Prepare Input data and put them in a folder
+4. Clone `matsim_quebec_province` with `git clone https://gitlab.com/ouassim_manout/matsim_quebec_province.git`. The repo is private. You should be a member to clone it. Ask `francesco.ciari@polymtl.ca or `ouassim.manout@entpe.fr` to have access.
+5. Checkout the appropriate branch of the Gitlab repo: `montreal_EOD_2018` for example
+6. Change the config file in the folder `matsim_quebec_province` to put your parameters: output folder, downsampling ratio, etc.
+7. Run run_matsim.sh with `sbatch create_matsim_input.sh`
+
+# Step 3: input data
+
+| File                                                 | Content                                                                          | Source                        |
+|:----------------------------------------------------:|:--------------------------------------------------------------------------------:|:-----------------------------:|
+| person_synthetic.csv                                 | List of synthetic persons                                                        | Output of Popgen              |
+| housing_synthetic.csv                                | List of synthetic households with unique IDs                                     | Output of Popgen              |
+| spatial_mapping_popgen_hts.csv                       | Mapping between the IDs of Popgen geography (incremental) and Administrative IDs | Census spatial data           |
+| NAICS2012_job_classification_census_tract_by_sex.csv | Distribution of genders on the job market by sector at the Census tract          | Census                        |
+| NAICS2012_job_classification_census_tract.csv        | Distribution of working individuals by sector at the Census tract                | Census                        |
+| correspondence_CUBF_NAICS_job_classification.csv     | Match NAICS classification of jobs to Census                                     | Census                        |
+| od_dep.csv                                           | HTS trips                                                                        | Enquête OD from MTQ           |
+| od_hh.csv                                            | HTS households                                                                   | Enquête OD from MTQ           |
+| od_per.csv                                           | HTS persons                                                                      | Enquête OD from MTQ           |
+| gtfs                                                 | Transit network and schedules                                                    | STM/ARTM                      |
+| osm                                                  | Car network preprecessed with MATSIM network correction tools                    | OpenStreetMap                 |
+| premises.csv                                         | List of synthetic premises with a number of rooms                                | Output of Synthetic premises  |
+| role_montreal_2018.csv                               | Housing data                                                                     | Role Evaluation from the MAMO |
+| spatial                                              | Shapefiles of Census tracts and Dissemination Areas                              | Census Spatial Data           |
+
+
+To prepare input data you need to run in advance different pipelines. Most importantly, you need Popgen outcomes: housing_synthetic.csv and perosn_synthetic.csv. To generate these files, please refer the Pogen pipeline ReadMe file.
+
+To locate the population, you need to create synthetic premises: `git clone https://gitlab.com/ouassim_manout/synthetic_premises.git`. The readMe file contains the details of the generation process and required input data. 

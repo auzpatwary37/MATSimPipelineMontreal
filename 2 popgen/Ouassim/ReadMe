@@ -1,0 +1,23 @@
+Popgen is used to prepare a synthetic population that matches observed sociodemographics. We use the base code deveopped by Karthik.
+
+Popgen documentation explains required input data. Please refer to that documentation for further details.
+
+We have developped a version of Popgen specific for Montreal. This version is available on Gitlab: https://gitlab.com/ouassim_manout/multiprocess_popgen.git. You should ask to join the repo or be invited in order to clone it. This version is capable of computing set of regions in parallel (HPC).
+
+# Steps
+1. Clone the Montreal popgen code: `git clone https://gitlab.com/ouassim_manout/multiprocess_popgen.git`.
+2. Create a Python virtual envrironment with *Python 2.7*. Popgen has not been updated to work with Python 3.
+3. Activate the virtual environment.
+4. From within the `multiprocess_popgen` folder, run `pip install .`. This command installs the available setup file.
+5. If you have any trouble with the specificed version of Pandas. You can download the corresponding wheels from the Pypy server and install them manually.
+6. Create popgen input data and put them in a folder.
+7. Edit the `configuration_one_region.yaml` file in the `seed_code` folder to specify the location of input data and other popgen parameters.
+8. Get inside `seed_code` folder.
+8. Create parallel jobs: `bash prepare_batch.sh numberOfNodes numberOfRegions`. For exapmle, `bash prepare_batch.sh 40 959` means that you will divide the computation of the 959 regions on 40 nodes. /!\ The script only creates the corresponding submission files in the specified folder.
+9. Run parallel computation: `bash batch_runner.sh`. This command submits the jobs to the server.
+10. Each job creates an output directory. To collect data, you should run `bash collect_results.sh`. This creates 2 files `housing_synthetic.csv` and `person_synthetic.csv`. These files are requireted to prapare MATSIM input data (see prepare_matsim_input_data.tar.gz on Beluga).
+
+
+# Step 6: input data
+
+Popgen needs various input data. It combines data from Census and Household Travel Survey (HTS). To prepare this data please check https://gitlab.com/ouassim_manout/popgen_input_data.git. Jupyter notebooks are available to prepare Popogen input data.
